@@ -9,5 +9,5 @@ class UrlAnswer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['url_id', 'status_code', 'body'];
+    protected $fillable = ['url_id', 'url_name', 'status_code', 'body'];
 }

@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('url_answers', function (Blueprint $table) {
             $table->id();
             $table->integer('url_id')->unique();
-            $table->string('status_code', 3);
-            $table->longText('body');
+            $table->string('url_name', 255)->unique();
+            $table->string('status_code', 3)->nullable();
+            $table->longText('body')->nullable();
             $table->timestamps();
         });
     }
