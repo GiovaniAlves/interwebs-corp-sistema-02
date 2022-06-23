@@ -38,6 +38,11 @@ composer install
 php artisan key:generate
 ```
 
+#### Executar as migrações
+```
+php artisan migrate
+```
+
 #### Subir o servidor
 ```
 php artisan serve
