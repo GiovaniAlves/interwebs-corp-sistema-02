@@ -11,16 +11,20 @@ use Illuminate\Http\Request;
 
 class UrlAnswerController extends Controller
 {
-    /*public function getUrls()
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function index()
     {
-        // Listar as respostas para o sistema 01
-        $response = Http::get('http://localhost:8000/api/urls-list');
+        $urlAnswers = UrlAnswer::select('url_id as id', 'url_name as name', 'status_code', 'body')->orderBy('url_id', 'DESC')->get();
 
-        //dd($response->collect());
+        return response(['urlAnswers' => $urlAnswers], 200);
+    }
 
-        SaveUrlAnswer::dispatch($response->collect());
-    }*/
-
+    /**
+     * @param Request $request
+     * @return void
+     */
     public function setUrl(Request $request)
     {
         if ($urlAnswer = UrlAnswer::where('url_id', $request->url_id)->first()){
@@ -29,5 +33,23 @@ class UrlAnswerController extends Controller
             $urlAnswer = UrlAnswer::create($request->all());
             SaveUrlAnswer::dispatch($urlAnswer);
         }
+    }
+
+
+    /**
+     * @param UrlAnswer $urlAnswer
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function show($url_id)
+    {
+        $urlAnswer = UrlAnswer::where('url_id', intval($url_id))->first();
+
+        return response(['urlAnswer' => $urlAnswer], 200);
+    }
+
+    public function destroy($url_id)
+    {
+        $urlAnswer = UrlAnswer::where('url_id', $url_id);
+        $urlAnswer->delete();
     }
 }
